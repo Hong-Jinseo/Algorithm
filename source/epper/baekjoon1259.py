@@ -9,23 +9,15 @@
 
 def solution(num):
 
-    oriNum = []
-
-    for i in num:
-        oriNum.append(i)
-    
-    for i in range(len(num)):
-        if(oriNum[i] != oriNum[len(oriNum)-i-1]):
-            return "No"
-    return "Yes"
-
+    if num == num[::-1]:
+        return "yes"
+    else:
+        return "no"
 
 if __name__=='__main__':
 
-    while True:
-        num = input()
-
-        if num == '0':
-            break
-        
+    num = input()
+    
+    while num!='0':
         print(solution(num))
+        num = input()
