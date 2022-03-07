@@ -6,7 +6,7 @@ def to_second(h, m, s):
     return seconds
 
 def to_time(sec):
-    print(sec//3600, ' ', (sec%3600)//60, ' ', (sec%3600)%60)
+    print(sec//3600, (sec%3600)//60, (sec%3600)%60)
     return
         
 h, m, s = map(int, input().split())
