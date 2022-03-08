@@ -2,10 +2,9 @@
 #알바생 강호
 
 N = int(input())
-tip = []        #N개 줄의 각 사람이 주려고 하는 팁
 total = 0       #강호가 받을 수 있는 팁의 최댓값
 
-tip = [int(input()) for _ in range(N)]
+tip = [int(input()) for _ in range(N)]  #팁 저장 리스트
 tip.sort(reverse=True)      #팁 내림차순 정렬
 
 for j in range(N):
