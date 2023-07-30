@@ -12,8 +12,6 @@ n, m = map(int, input().split())
 start = int(input())
 # 그래프 정보
 graph = [[] for _ in range(n + 1)]
-# 방문 여부 체크
-visited = [False] * (n + 1)
 # 최단 거리 테이블 (무한으로 초기화)
 distance = [INF] * (n + 1)
 
