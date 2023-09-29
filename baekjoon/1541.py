@@ -1,18 +1,15 @@
 # 그리디
 # 잃어버린 괄호
 
-# 덧셈 할 숫자들 묶기
-exp = input().split('-')
+exp1 = list(input().split('-'))
+exp2 = []
 
-sub = []
-for e in exp:
-    # 덧셈 수행
-    temp = e.split('+')
-    sub.append(sum(map(int, temp)))
+for e in exp1:
+    temp = map(int, e.split('+'))
+    exp2.append(sum(temp))
 
-# 뺄셈 수행
-answer = sub[0]
-for s in sub[1:]:
-    answer -= s
+answer = exp2[0]
+for e in exp2[1:]:
+    answer -= e
 
 print(answer)
