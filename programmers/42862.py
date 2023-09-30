@@ -1,6 +1,42 @@
 # 그리디
 # 체육복
 
+# 2차 풀이
+def solution(n, lost, reserve):
+    answer = 0
+    lost = set(lost)
+    reserve = set(reserve)
+
+    # 도난당했는데 여유분이 있던 사람 제외 (대칭차집합)
+    temp = lost ^ reserve
+
+    # 여전히 체육복이 필요한 사람, 여전히 체육복을 빌려줄 수 있는 사람 계산
+    need = list(temp - reserve)
+    need.sort()
+
+    extra = [False] * (n + 1)
+    for i in list(temp - lost):
+        extra[i] = True
+
+    # 빌려주기 수행
+    for lt in need:
+        # 앞 사람에게 빌리기
+        if 0 < lt - 1 <= n and extra[lt - 1]:
+            extra[lt - 1] = False
+
+        # 뒷 사람에게 빌기기
+        elif 0 < lt + 1 <= n and extra[lt + 1]:
+            extra[lt + 1] = False
+
+        # 빌리지 못한 사람
+        else:
+            answer += 1
+
+    return n - answer
+
+
+'''
+# 1차 풀이
 from collections import Counter
 
 
@@ -37,7 +73,7 @@ def solution(n, lost, reserve):
                 student[r + 1] = True
 
     return sum(student[1:])
-
+'''
 
 print(solution(5, [2, 4], [1, 3, 5]))
 # 5
