@@ -1,6 +1,24 @@
 # 그리디
 # 단속카메라
 
+# 2차 풀이
+def solution(routes):
+    answer = 0
+    camera = int(-1e9)  # 카메라 위치
+
+    # 진출시간 기준 오름차순 정렬
+    routes.sort(key=lambda x: x[1])
+
+    for i, o in routes:
+        # 카메라 위치 < 신규 차량의 진입시간 (-> 이 경우, 신규 차량은 카메라에 잡히지 않음)
+        if camera < i:
+            camera = o  # 카메라의 위치를 신규차량의 진출시간으로 갱신
+            answer += 1
+
+    return answer
+
+'''
+# 1차 풀이
 def solution(routes):
     answer = 0
     routes.sort()
@@ -32,6 +50,7 @@ def solution(routes):
         return answer + 1
 
     return answer
+'''
 
 
 print(solution([[-2, -1], [1, 2], [-3, 0]]))  # 2
