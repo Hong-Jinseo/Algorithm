@@ -4,6 +4,21 @@
 n = int(input())
 a = list(map(int, input().split()))
 
+dp = [1] * n
+
+for i in range(1, n):
+    for j in range(i):
+        # LIS를 만들 수 있을 때
+        if a[j] < a[i]:
+            dp[i] = max(dp[i], dp[j]+1)     # (연장 X, 연장 O)
+
+print(max(dp))
+
+
+'''
+n = int(input())
+a = list(map(int, input().split()))
+
 # i번째 인덱스에서 끝나는 부분 수열의 길이
 d = [1] * n
 
@@ -18,3 +33,4 @@ for i in range(1, n):
             # d[i]: a[i]를 추가하지 않은, 기존 값
 
 print(max(d))
+'''
