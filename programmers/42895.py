@@ -12,10 +12,10 @@ def solution(N, number):
         return 1
 
     # dp[i] = N을 i번 써서 만들 수 있는 수의 집합
-    dp = [set() for i in range(N + 1)]
+    dp = [set() for i in range(10)]
     dp[1].add(N)  # N
 
-    for i in range(2, N + 1):
+    for i in range(2, 9):
         dp[i].add(int(str(N) * i))
 
         for j in range(1, i):
