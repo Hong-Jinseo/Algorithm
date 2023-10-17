@@ -1,7 +1,40 @@
-# bfs
+# 1차 BFS, 2차 DFS
 # 여행경로
 
 
+# 2차 풀이 : DFS (효율 더 좋음)
+def dfs(now, tickets, used, route):
+    # 모든 티켓을 사용했다면
+    if all(used):
+        return True
+
+    for i, ticket in enumerate(tickets):
+        # 사용하지 않은 티켓의 출발지가 현위치와 같다면
+        if now == ticket[0] and not used[i]:
+            route.append(ticket[1])
+            used[i] = True
+
+            if dfs(ticket[1], tickets, used, route):
+                return route
+
+            route.pop()
+            used[i] = False
+
+    return False
+
+
+def solution(tickets):
+    tickets.sort(key=lambda x: x[1])
+    used = [False] * len(tickets)
+
+    # 출발지, 티켓목록, 사용여부, 경로, 정답 유무
+    route = ['ICN']
+    answer = dfs('ICN', tickets, used, route)
+
+    return answer
+
+'''
+# 1차 풀이 : BFS
 from collections import deque
 
 
@@ -40,3 +73,4 @@ def solution(tickets):
             idx += 1
 
     return answer
+'''
