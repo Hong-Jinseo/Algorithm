@@ -7,6 +7,37 @@ INF = int(1e9)
 
 
 def solution(n, edge):
+    graph = [[] for _ in range(n + 1)]
+    for s, e in edge:
+        graph[s].append(e)
+        graph[e].append(s)
+
+    visited = [False] * (n + 1)
+    dist = [INF] * (n + 1)
+
+    visited[1] = True
+    dist[1] = 0
+    q = deque([1])
+
+    while q:
+        now = q.popleft()
+
+        for neighbor in graph[now]:
+            if not visited[neighbor]:
+                dist[neighbor] = dist[now] + 1
+                visited[neighbor] = True
+                q.append(neighbor)
+
+    return dist.count(max(dist[1:]))
+
+'''
+# 1차 풀이
+from collections import deque
+
+INF = int(1e9)
+
+
+def solution(n, edge):
     graph = [[] for i in range(n + 1)]
 
     for s, e in edge:
@@ -30,3 +61,4 @@ def solution(n, edge):
                 q.append(node)
 
     return distance[1:].count(max(distance[1:]))
+'''
