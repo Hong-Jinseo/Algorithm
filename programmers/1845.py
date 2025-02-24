@@ -2,7 +2,10 @@
 # 폰켓몬
 
 def solution(nums):
-    return min(len(set(nums)), int(len(nums)/2))
+    nums_set = set(nums)
+    if len(nums_set) >= len(nums)/2:
+        return len(nums)/2
+    else:
+        return len(nums_set)
 
-
-print(solution([3, 1, 2, 3]))
+print(solution([3,1,2,3]))
