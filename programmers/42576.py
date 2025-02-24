@@ -1,13 +1,17 @@
 # 해시
 # 완주하지 못한 선수
 
-def solution(participant, completion):
-    participant.sort()
-    completion.sort()
+from collections import Counter
 
-    for i in range(len(completion)):
-        if participant[i] != completion[i]:
-            return participant[i]
-    return participant[-1]
+def solution(participant, completion):
+    p = Counter(participant)
+    c = Counter(completion)
+
+    result = p - c
+    for v in result:
+        return v
+
+    # [참고] 다음과 같이 return 쓰면 됨
+    # return next(iter(result))  # result에서 첫 번째 요소를 반환 (키 값만 필요)
 
 print(solution(["mislav", "stanko", "mislav", "ana"], ["stanko", "ana", "mislav"]))
