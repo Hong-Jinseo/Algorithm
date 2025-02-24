@@ -1,21 +1,31 @@
 # 해시
 # 전화번호 목록
 
-def solution(phone_book):
-    # 딕셔너리에 phone_book 값 저장
-    dic = dict()
-    for num in phone_book:
-        dic[num] = True
 
-    for num in phone_book:
-        # 전화번호의 앞부분이 이미 있는 번호라면(=dic에 있다면)
-        for i in range(1, len(num)):
-            if num[0:i] in dic:
+def solution(phone_book):
+    phone_book.sort()
+
+    for i, value in enumerate(phone_book[:-1]):
+        # 사전순으로 정렬하면 인접한 케이스만 고려하면 됨
+        if value == phone_book[i+1][:len(value)]:
+            return False
+    return True
+    
+
+'''
+# 시간초과 코드
+def solution(phone_book):
+    phone_book.sort(key=lambda x: len(x))
+    
+    for i, value in enumerate(phone_book):
+        for j in range(i+1, len(phone_book)):
+            if value == phone_book[j][:len(value)]:
                 return False
     return True
+'''
 
 
-print(solution(["123","456","789"]))
+print(solution(["12","123","1235","567","88"]))
 
 '''
 ["119", "97674223", "1195524421"]	false
