@@ -3,37 +3,31 @@
 
 from collections import deque
 
-
 def solution(progresses, speeds):
     answer = []
+    q = deque()
 
-    fin = []
-    lastest = 0
+    for p, s in zip(progresses, speeds):
+        q.append([p, s])
+    
+    while q:
+        for i in range(len(q)):
+            q[i][0] += q[i][1]  # 작업 진행
+        
+        cnt = 0
+        while q and q[0][0] >= 100:
+            q.popleft()
+            cnt += 1
+        
+        if cnt > 0:
+            answer.append(cnt)
 
-    index = [True for i in range(len(speeds))]
-
-    while any(index):
-        # 하루에 배포된 기능 수
-        count = 0
-
-        # 하루 작업 진도
-        for i in range(len(speeds)):
-            if index[i]:
-                progresses[i] += speeds[i]
-                if progresses[i] >= 100:
-                    fin.append(i)
-                    index[i] = False
-
-        fin.sort(reverse=True)
-
-        # 배포
-        while fin and fin[-1] == lastest:
-            fin.pop()
-            lastest += 1
-            count += 1
-
-        if count > 0:
-            answer.append(count)
-
-    print(answer)
     return answer
+
+
+print(solution([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1]))
+'''
+progresses, speeds	return
+[93, 30, 55], [1, 30, 5]	[2, 1]
+[95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1]	[1, 3, 2]
+'''
