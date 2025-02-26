@@ -1,30 +1,27 @@
 # 스택
 # 주식가격
 
-from collections import deque
-
-
 def solution(prices):
-    n = len(prices)
-    answer = [0] * n
-    stack = [(prices[0], 0)]
-    prices = deque(prices[1:])
-    idx = 1
+    result = []
+    stack = [[prices[0], 0]]
+    cnt = 0
 
-    while prices:
-        now = prices.popleft()
-        while stack and stack[-1][0] > now:
-            out = stack.pop()
-            answer[out[1]] = idx - out[1]
-        stack.append((now, idx))
-        idx += 1
+    for i, p in enumerate(prices[1:], start=1):
+        cnt += 1
+        # 스택에 본인보다 큰 값이 있으면 pop
+        while stack and stack[-1][0] > p:
+            val, idx = stack.pop()
+            result.append((idx, cnt - idx)) # pop한 값을 저장 (input순서, pop까지 소요시간)
 
+        stack.append([p, i])
+    
     while stack:
-        out = stack.pop()
-        answer[out[1]] = n - out[1] - 1
+        val, idx = stack.pop()
+        result.append((idx, cnt - idx))
+    
+    result.sort()   # result를 sort하는 대신, 미리 리스트[0]*n 만들어놓고 삽입하는 것도 가능
 
-    return answer
-
+    return [row[1] for row in result]
 
 print(solution([1, 2, 3, 2, 3]))
 # [4, 3, 1, 1, 0]
