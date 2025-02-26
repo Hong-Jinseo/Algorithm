@@ -3,26 +3,22 @@
 
 import heapq
 
-
+# 섞은 음식의 스코빌 지수 = 가장 맵지 않은 음식의 스코빌 지수 + (두 번째로 맵지 않은 음식의 스코빌 지수 * 2)
 def solution(scoville, K):
+    heapq.heapify(scoville)
     answer = 0
-    heap = []
 
-    # 스코빌 목록을 힙에 담기
-    for s in scoville:
-        heapq.heappush(heap, s)
+    # 최소값이 K 미만이면
+    while scoville[0] < K:
+        # 2개 미만이면 더이상 연산 불가
+        if len(scoville) < 2:
+            answer = -1
+            break
 
-    # K보다 작은 값이 힙에 하나라도 있다면
-    while any(K > i for i in heap):
-        # 불가능한 경우
-        if len(heap) < 2:
-            return -1
-
-        # 문제에서 제시한 연산
-        first = heapq.heappop(heap)
-        second = heapq.heappop(heap)
-        heapq.heappush(heap, first + second * 2)
         answer += 1
+        first = heapq.heappop(scoville)
+        second = heapq.heappop(scoville)
+        heapq.heappush(scoville, first + second * 2)
 
     return answer
 
