@@ -3,36 +3,43 @@
 
 import heapq
 
-
-# SJF 알고리즘
 def solution(jobs):
+    h = []
     answer = []
-    n = len(jobs)
+    sec = -1
+    
+    # 메인힙에 추가
+    for idx, time in enumerate(jobs):
+        req_time, spend_time = time
+        heapq.heappush(h, (req_time, spend_time, idx))
+    
+    while h:
+        sec += 1
+        h2 = []
 
-    jobs.sort()  # 요청 시간순 정렬
-    n = len(jobs)
+        # 후보힙에 후보 작업들 추가
+        while h and h[0][0] <= sec:
+            rt, st, i = heapq.heappop(h)
+            heapq.heappush(h2, (st, rt, i))
+        
+        # 후보 작업이 있다면
+        if h2:
+            # 우선순위 높은 것 처리
+            popped = heapq.heappop(h2)
+            # print(popped, sec)
+            sec += popped[0]    # 현재시간을 작업 끝난 시간으로 업데이트 (현재시간 += 소요시간)
+            answer.append(sec - popped[1])  # 현재시간 - 요청시간
+            print(sec, popped[1])
 
-    now = 0  # 현재 시각
-    pre = -1  # 직전 작업이 끝난 시각
+            # 남은 작업 다시 메인 힙으로
+            h.extend([(y, x, z) for x, y, z in h2])
+            heapq.heapify(h)
 
-    waiting = []  # 대기중인 프로세스를 저장하는 힙
+            # 시간 정정 (<- 이 과정에서 걸리는 시간은 없다고 가정합니다)
+            sec -= 1
 
-    # 종료된 프로세스 수가 n이 될 때까지 반복
-    while len(answer) < n:
-        for job in jobs:
-            # '직전 작업~현재' 사이에 요청된 job이 있으면
-            if pre < job[0] <= now:
-                # 대기 힙에 소요시간이 짧은 순으로 저장 (최소힙)
-                heapq.heappush(waiting, (job[1], job[0]))  # (소요시간, 입력시각)
+    print(answer)
+    return sum(answer) // len(answer)
 
-        # 대기중인 작업이 있으면
-        if waiting:
-            new = heapq.heappop(waiting)  # 가장 소요시간이 짧은 작업
-            pre = now  # 앞 작업이 끝난 시간 기록
-            now += new[0]  # 새로운 작업의 소요시간만큼 시간 경과
-            answer.append(now - new[1])  # 종료 시각 - 입력 시각
-        # 대기중인 작업이 없으면
-        else:
-            now += 1  # 1초씩 증가
-
-    return sum(answer) // n
+print(solution([[0, 3], [1, 9], [3, 5]]))
+# 8
