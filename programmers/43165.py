@@ -1,21 +1,27 @@
-# DFS 깊이 우선 탐색
+# 깊이/너비 우선 탐색(DFS/BFS)
 # 타겟 넘버
 
-def dfs(numbers, idx, now, target, turn):
-    if turn == len(numbers):
-        if now == target:
-            return 1
-        return 0
+# (연산 횟수, 숫자길이, 숫자목록, 목표 결과, 앞 연산 결과)
+def dfs(cnt, length, numbers, target, result):
+    answer = 0
+    if cnt == length:
+        if result == target:
+            return True
+        return False
 
-    add = dfs(numbers, idx + 1, now + numbers[idx], target, turn + 1)
-    sub = dfs(numbers, idx + 1, now - numbers[idx], target, turn + 1)
-
-    return add + sub
+    answer += dfs(cnt+1, length, numbers, target, result + numbers[cnt])
+    answer += dfs(cnt+1, length, numbers, target, result - numbers[cnt])
+    
+    return answer
 
 
 def solution(numbers, target):
-    answer = dfs(numbers, 0, 0, target, 0)
+    answer = dfs(0, len(numbers), numbers, target, 0)
     return answer
+
+print(solution([1, 1, 1, 1, 1], 3))
+# 5
+
 
 '''
 # 2차 풀이
